@@ -84,6 +84,18 @@
   }
   .verdict-chip::before { content: ""; width: 6px; height: 6px; background: var(--caution); border-radius: 50%; }
 
+  .card-cta {
+    display: inline-block;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--ink);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    margin-top: 14px;
+  }
+
+  .report-card:hover .card-cta { color: var(--verified); }
+
   .empty-slot {
     padding: 24px 0; border-bottom: 1px solid var(--line);
     font-size: 14.5px; color: var(--ink-faint); font-style: italic;
@@ -112,6 +124,7 @@
       </div>
       <p class="report-desc">Klaim "digital permanence" dibedah lewat fundamental, on-chain data, komunitas & sosial, dan tokenomics.</p>
       <span class="verdict-chip">CAUTIOUS — high risk, low transparency</span>
+      <span class="card-cta">Klik untuk baca laporan CAST selengkapnya</span>
     </a>
 
     <div class="empty-slot">Laporan berikutnya menyusul di sini.</div>

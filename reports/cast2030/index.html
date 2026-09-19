@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CAST2030 — Laporan Due Diligence Independen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #EEF0EA;
+    --paper-raised: #F8F9F5;
+    --ink: #1B1F1D;
+    --ink-soft: #52584F;
+    --ink-faint: #7B8177;
+    --line: rgba(27,31,29,0.14);
+    --line-strong: rgba(27,31,29,0.28);
+    --verified: #1F6F5C;
+    --verified-bg: rgba(31,111,92,0.09);
+    --caution: #93682A;
+    --caution-bg: rgba(147,104,42,0.10);
+    --flag: #9C3B2E;
+    --flag-bg: rgba(156,59,46,0.09);
+    --serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+    --sans: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --mono: 'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace;
+  }
+
+  :root:not([data-theme="light"]) {
+    @media (prefers-color-scheme: dark) {
+      --paper: #14161A;
+      --paper-raised: #1B1E22;
+      --ink: #E9ECE6;
+      --ink-soft: #ABB2A6;
+      --ink-faint: #767D73;
+      --line: rgba(255,255,255,0.14);
+      --line-strong: rgba(255,255,255,0.26);
+      --verified: #4FA98A;
+      --verified-bg: rgba(79,169,138,0.12);
+      --caution: #D2A24C;
+      --caution-bg: rgba(210,162,76,0.12);
+      --flag: #E0685A;
+      --flag-bg: rgba(224,104,90,0.12);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --paper: #14161A;
+    --paper-raised: #1B1E22;
+    --ink: #E9ECE6;
+    --ink-soft: #ABB2A6;
+    --ink-faint: #767D73;
+    --line: rgba(255,255,255,0.14);
+    --line-strong: rgba(255,255,255,0.26);
+    --verified: #4FA98A;
+    --verified-bg: rgba(79,169,138,0.12);
+    --caution: #D2A24C;
+    --caution-bg: rgba(210,162,76,0.12);
+    --flag: #E0685A;
+    --flag-bg: rgba(224,104,90,0.12);
+  }
+
+  * { box-sizing: border-box; }
+
+  html {
+    scroll-padding-top: env(safe-area-inset-top, 0px);
+  }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.6;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 56px 24px 80px;
+  }
+
+  /* ---------- Cover ---------- */
+  .cover {
+    border-bottom: 1px solid var(--line-strong);
+    padding-bottom: 36px;
+    margin-bottom: 44px;
+  }
+
+  .cover .kicker {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--ink-faint);
+    letter-spacing: 0.02em;
+    margin-bottom: 18px;
+  }
+
+  .cover h1 {
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: clamp(34px, 6vw, 52px);
+    line-height: 1.08;
+    margin: 0 0 14px;
+    letter-spacing: -0.01em;
+  }
+
+  .cover .subhead {
+    font-family: var(--serif);
+    font-size: 19px;
+    color: var(--ink-soft);
+    font-style: italic;
+    margin: 0 0 26px;
+    max-width: 46ch;
+  }
+
+  .byline {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    font-size: 14px;
+    color: var(--ink-soft);
+  }
+
+  .byline strong { color: var(--ink); font-weight: 600; }
+
+  .verdict-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--mono);
+    font-size: 13px;
+    padding: 6px 12px;
+    border: 1px solid var(--caution);
+    color: var(--caution);
+    background: var(--caution-bg);
+    margin-top: 22px;
+  }
+
+  .verdict-tag::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    background: var(--caution);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* ---------- Executive summary ---------- */
+  .exec {
+    background: var(--paper-raised);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--ink);
+    padding: 26px 28px;
+    margin-bottom: 48px;
+  }
+
+  .exec h2 {
+    font-family: var(--mono);
+    font-size: 13px;
+    text-transform: none;
+    color: var(--ink-faint);
+    margin: 0 0 12px;
+    font-weight: 500;
+  }
+
+  .exec p {
+    margin: 0;
+    font-size: 16.5px;
+    color: var(--ink);
+  }
+
+  .callout {
+    background: var(--paper-raised);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--ink-soft);
+    padding: 22px 24px;
+    margin: 22px 0 24px;
+  }
+
+  .callout h4 {
+    font-family: var(--mono);
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--ink-faint);
+    margin: 0 0 10px;
+  }
+
+  .callout p {
+    font-size: 15.5px;
+    margin: 0 0 12px;
+  }
+
+  .callout p:last-child { margin-bottom: 0; }
+
+  /* ---------- Scorecard ---------- */
+  .scorecard {
+    margin-bottom: 56px;
+  }
+
+  .scorecard-title {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .scorecard-note {
+    font-size: 13.5px;
+    color: var(--ink-faint);
+    margin-bottom: 24px;
+  }
+
+  .meter-row {
+    display: grid;
+    grid-template-columns: 130px 1fr 34px;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .meter-row:last-child { border-bottom: none; }
+
+  .meter-label {
+    font-size: 14px;
+    color: var(--ink-soft);
+  }
+
+  .meter-track {
+    height: 8px;
+    background: var(--line);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .meter-fill {
+    height: 100%;
+    background: var(--ink);
+  }
+
+  .meter-fill.good { background: var(--verified); }
+  .meter-fill.mid { background: var(--caution); }
+  .meter-fill.bad { background: var(--flag); }
+
+  .meter-val {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--ink-soft);
+    text-align: right;
+  }
+
+  /* ---------- Sections ---------- */
+  section.pillar {
+    margin-bottom: 56px;
+  }
+
+  .pillar-head {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--line-strong);
+    padding-bottom: 12px;
+  }
+
+  .pillar-num {
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--ink-faint);
+  }
+
+  .pillar-head h2 {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 26px;
+    margin: 0;
+  }
+
+  .pillar p, .pillar li {
+    font-size: 16px;
+    color: var(--ink);
+  }
+
+  .pillar p { margin: 0 0 16px; }
+
+  .finding {
+    display: flex;
+    gap: 14px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .finding:last-child { border-bottom: none; }
+
+  .tag {
+    flex-shrink: 0;
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 3px 8px;
+    height: fit-content;
+    white-space: nowrap;
+    margin-top: 3px;
+  }
+
+  .tag.verified { color: var(--verified); background: var(--verified-bg); border: 1px solid var(--verified); }
+  .tag.caution { color: var(--caution); background: var(--caution-bg); border: 1px solid var(--caution); }
+  .tag.flag { color: var(--flag); background: var(--flag-bg); border: 1px solid var(--flag); }
+
+  .finding-body strong { font-weight: 600; }
+  .finding-body { font-size: 15.5px; }
+  .finding-body p { margin: 0; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 18px 0 24px;
+    font-size: 14.5px;
+  }
+
+  .table-wrap {
+    overflow-x: auto;
+    margin: 18px 0 24px;
+  }
+
+  th, td {
+    text-align: left;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  th {
+    font-family: var(--mono);
+    font-weight: 500;
+    font-size: 12.5px;
+    color: var(--ink-faint);
+    white-space: nowrap;
+  }
+
+  td { color: var(--ink); }
+  td.num { font-family: var(--mono); font-size: 14px; }
+
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 20px 0 8px;
+  }
+
+  @media (max-width: 560px) {
+    .compare-grid { grid-template-columns: 1fr; }
+  }
+
+  .compare-card {
+    border: 1px solid var(--line);
+    padding: 18px;
+  }
+
+  .compare-card.weak { border-left: 3px solid var(--flag); }
+  .compare-card.strong { border-left: 3px solid var(--verified); }
+
+  .compare-card h3 {
+    font-family: var(--serif);
+    font-size: 17px;
+    margin: 0 0 10px;
+  }
+
+  .compare-card ul {
+    margin: 0;
+    padding-left: 18px;
+    font-size: 14px;
+    color: var(--ink-soft);
+  }
+
+  .compare-card li { margin-bottom: 6px; }
+
+  .pull {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 19px;
+    color: var(--ink-soft);
+    border-left: 2px solid var(--line-strong);
+    padding-left: 20px;
+    margin: 24px 0;
+  }
+
+  code.addr {
+    font-family: var(--mono);
+    font-size: 13px;
+    background: var(--paper-raised);
+    padding: 2px 6px;
+    border: 1px solid var(--line);
+    word-break: break-all;
+  }
+
+  /* ---------- Open questions ---------- */
+  .questions {
+    background: var(--paper-raised);
+    border: 1px solid var(--line);
+    padding: 26px 28px;
+    margin-bottom: 56px;
+  }
+
+  .questions h2 {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 600;
+    margin: 0 0 18px;
+  }
+
+  .questions ol {
+    margin: 0;
+    padding-left: 20px;
+  }
+
+  .questions li {
+    margin-bottom: 12px;
+    font-size: 15.5px;
+    color: var(--ink);
+  }
+
+  /* ---------- Verdict ---------- */
+  .final-verdict {
+    margin-bottom: 56px;
+  }
+
+  .final-verdict h2 {
+    font-family: var(--serif);
+    font-size: 26px;
+    font-weight: 600;
+    margin: 0 0 16px;
+  }
+
+  /* ---------- Footer ---------- */
+  footer {
+    border-top: 1px solid var(--line-strong);
+    padding-top: 24px;
+    font-size: 13px;
+    color: var(--ink-faint);
+  }
+
+  footer p { margin: 0 0 10px; }
+  footer .sources { margin-top: 18px; }
+  footer .sources span { display: block; margin-bottom: 4px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="cover">
+    <div class="kicker">LAPORAN RISET INDEPENDEN · TOKEN DUE DILIGENCE</div>
+    <h1>CAST2030 (CAST)</h1>
+    <p class="subhead">Membaca ulang klaim "digital permanence" lewat data on-chain, struktur tokenomics, dan jejak sosial — bukan cuma lewat narasi whitepaper-nya saja.</p>
+    <div class="byline">
+      <span>Disusun oleh <strong>Loka</strong> · @saturnus723</span>
+      <span>September 2026</span>
+      <span>Sumber: Whitepaper CAST v1.2, BscScan, Indodax, CoinCodex, data listing publik</span>
+    </div>
+    <div class="verdict-tag">CAUTIOUS — high risk, low transparency</div>
+  </div>
+
+  <div class="exec">
+    <h2>RINGKASAN EKSEKUTIF</h2>
+    <p>CAST adalah token BEP-20 bersupply tetap 2.030 keping yang dipasarkan sepenuhnya lewat narasi filosofis "permanence" — bukan produk dengan utility fungsional. Empat pilar riset di bawah menunjukkan pola yang konsisten: tidak ada jejak likuiditas independen di luar satu exchange, alokasi insider terkonsentrasi tanpa vesting yang terverifikasi, jejak komunitas jauh di bawah proyek pembanding di listing batch yang sama, dan ada gap antara syarat transparansi resmi exchange dengan apa yang benar-benar dipublikasikan ke investor ritel. Kelangkaan supply-nya nyata, tapi kelangkaan tanpa demand independen bukan jaminan nilai — itu justru ciri klasik pasar tipis yang rawan bergerak liar.</p>
+  </div>
+
+  <div class="scorecard">
+    <div class="scorecard-title">Skor Ringkas</div>
+    <div class="scorecard-note">Skala 1–10. Untuk baris "Tingkat Risiko", angka lebih tinggi = risiko lebih besar (bukan lebih baik).</div>
+
+    <div class="meter-row">
+      <div class="meter-label">Narasi</div>
+      <div class="meter-track"><div class="meter-fill mid" style="width:70%"></div></div>
+      <div class="meter-val">7/10</div>
+    </div>
+    <div class="meter-row">
+      <div class="meter-label">Tokenomics</div>
+      <div class="meter-track"><div class="meter-fill mid" style="width:40%"></div></div>
+      <div class="meter-val">4/10</div>
+    </div>
+    <div class="meter-row">
+      <div class="meter-label">Utility</div>
+      <div class="meter-track"><div class="meter-fill bad" style="width:20%"></div></div>
+      <div class="meter-val">2/10</div>
+    </div>
+    <div class="meter-row">
+      <div class="meter-label">Transparansi</div>
+      <div class="meter-track"><div class="meter-fill bad" style="width:30%"></div></div>
+      <div class="meter-val">3/10</div>
+    </div>
+    <div class="meter-row">
+      <div class="meter-label">Tingkat Risiko</div>
+      <div class="meter-track"><div class="meter-fill bad" style="width:80%"></div></div>
+      <div class="meter-val">8/10</div>
+    </div>
+  </div>
+
+  <!-- PILLAR 1 -->
+  <section class="pillar">
+    <div class="pillar-head">
+      <span class="pillar-num">Pilar 1</span>
+      <h2>Fundamental Project</h2>
+    </div>
+
+    <p>Whitepaper CAST v1.2 dibangun di atas satu klaim sentral: nilai lahir dari kelangkaan dan kesabaran holder untuk tidak menjual, bukan dari utility. Secara ekonomi, ini adalah <em>circular reasoning</em> — token dianggap berharga karena "harus dipegang", dan harus dipegang karena itulah yang katanya membuatnya berharga. Tidak ada anchor eksternal (produk, revenue, use case) yang memvalidasi klaim tersebut secara independen.</p>
+
+    <div class="finding">
+      <span class="tag flag">RED FLAG</span>
+      <div class="finding-body"><p><strong>Audit belum terbukti terpublikasi.</strong> Whitepaper menjanjikan audit independen pihak ketiga "Q4 2025". Periode itu sudah lewat cukup lama, dan tidak ada hasil audit yang bisa ditemukan dipublikasikan ke publik.</p></div>
+    </div>
+    <div class="finding">
+      <span class="tag flag">RED FLAG</span>
+      <div class="finding-body"><p><strong>Tim sepenuhnya anonim.</strong> Tidak ada satu nama pun — founder, developer, advisor — yang disebut di whitepaper maupun materi resmi CAST.</p></div>
+    </div>
+    <div class="finding">
+      <span class="tag caution">CAUTION</span>
+      <div class="finding-body"><p><strong>Zero utility fungsional saat ini.</strong> Semua fitur yang disebut ("Collector Verification", "Legacy Certificates", "Cultural Roles") berstatus rencana masa depan — belum ada satu pun yang live di kontrak.</p></div>
+    </div>
+    <div class="finding">
+      <span class="tag verified">FAKTA</span>
+      <div class="finding-body"><p>Kontrak sederhana, tanpa fungsi mint dan tanpa fungsi upgrade — secara teknis ini mengurangi risiko rug klasik lewat inflasi supply tersembunyi.</p></div>
+    </div>
+  </section>
+
+  <!-- PILLAR 2 -->
+  <section class="pillar">
+    <div class="pillar-head">
+      <span class="pillar-num">Pilar 2</span>
+      <h2>On-Chain Data</h2>
+    </div>
+
+    <p>Kontrak CAST tercatat di BSC pada alamat <code class="addr">0x20BD5453117acC748895F8F84dD3CD21999B8E6B</code>. Aktivitas on-chain-nya jauh lebih sepi daripada yang diharapkan untuk token dengan harga senilai jutaan rupiah per keping.</p>
+
+    <div class="finding">
+      <span class="tag flag">RED FLAG</span>
+      <div class="finding-body"><p><strong>Tidak ada liquidity pool terdeteksi di DEX manapun.</strong> CAST tidak muncul sama sekali di DexScreener — indexer yang otomatis mendeteksi semua pool aktif di BSC. Volume di BscScan juga tercatat mendekati nol.</p></div>
+    </div>
+    <div class="finding">
+      <span class="tag flag">RED FLAG</span>
+      <div class="finding-body"><p><strong>Kemungkinan besar Indodax adalah satu-satunya venue price discovery.</strong> Tanpa DEX pool dan tanpa listing exchange lain yang terdeteksi, tidak ada pasar independen yang bisa dipakai cross-check apakah harga yang terbentuk wajar.</p></div>
+    </div>
+    <div class="finding">
+      <span class="tag caution">CAUTION</span>
+      <div class="finding-body"><p><strong>Insider allocation 20,7% tanpa vesting yang dijelaskan.</strong> Gabungan alokasi Team, Reserve & Treasury, dan Partnership & Ecosystem mencapai 420 dari 2.030 token, dan whitepaper tidak menyebut jadwal lock-up.</p></div>
+    </div>
+    <div class="finding">
+      <span class="tag verified">FAKTA</span>
+      <div class="finding-body"><p>Ownership function kontrak sudah renounced — memang mencegah minting baru, tapi ini tidak mencegah wallet insider menjual alokasi awal mereka di pasar terbuka.</p></div>
+    </div>
+
+    <p class="pull">"Renounced" berarti tidak ada admin key — bukan berarti tidak ada whale yang bisa menggerakkan harga.</p>
+  </section>
+
+  <!-- PILLAR 3 -->
+  <section class="pillar">
+    <div class="pillar-head">
+      <span class="pillar-num">Pilar 3</span>
+      <h2>Community &amp; Social</h2>
+    </div>
+
+    <p>Sebelum membandingkan dengan token lain, ukuran channel resmi CAST sendiri sudah jadi titik awal yang perlu dicatat: akun Telegram tercatat sekitar 185 subscriber, dan akun X sekitar 105 followers. Untuk token yang sudah listing resmi di exchange dan diklaim sebagai "gerakan filosofis" dengan basis komunitas, ukuran ini tergolong sangat kecil.</p>
+
+    <p>Untuk menilai apakah jejak sosial CAST wajar untuk tokennya, cara paling adil adalah membandingkan dengan token lain yang listing di Indodax pada batch yang sama (Januari 2026) — bukan membandingkan dengan token besar dari ekosistem berbeda.</p>
+
+    <div class="compare-grid">
+      <div class="compare-card weak">
+        <h3>CAST</h3>
+        <ul>
+          <li>Telegram ~185 subscriber, X ~105 followers</li>
+          <li>Tidak terdeteksi di DexScreener</li>
+          <li>Volume on-chain ~0</li>
+          <li>Tidak ada data komunitas pra-listing yang terlihat publik</li>
+        </ul>
+      </div>
+      <div class="compare-card strong">
+        <h3>Nexa (NXA) — listing sebatch</h3>
+        <ul>
+          <li>9.376 holders on-chain</li>
+          <li>32.411+ transaksi on-chain tercatat</li>
+          <li>~127.000 followers komunitas sebelum listing</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <tr><th>Metrik</th><th>CAST</th><th>Unibase (UB)</th></tr>
+        <tr><td>Exchange</td><td class="num">Indodax (terindikasi tunggal)</td><td class="num">Gate, KuCoin, Bithumb, MEXC, Phemex</td></tr>
+        <tr><td>DEX pool</td><td class="num">Tidak terdeteksi</td><td class="num">PancakeSwap V3, aktif</td></tr>
+        <tr><td>Holders</td><td class="num">Tidak terverifikasi publik</td><td class="num">66.556</td></tr>
+        <tr><td>Volume 24 jam</td><td class="num">Sangat tipis</td><td class="num">~$29,9 juta</td></tr>
+      </table>
+    </div>
+
+    <p>Kesimpulannya bukan "proyek Indonesia biasanya begini" — dalam batch listing yang sama, Indodax menampung spektrum proyek yang sangat lebar, dari yang solid (Unibase) sampai yang nyaris tanpa jejak on-chain independen (CAST). CAST berada di ujung paling minim dari spektrum itu.</p>
+  </section>
+
+  <!-- PILLAR 4 -->
+  <section class="pillar">
+    <div class="pillar-head">
+      <span class="pillar-num">Pilar 4</span>
+      <h2>Tokenomics</h2>
+    </div>
+
+    <div class="callout">
+      <h4>KERANGKA TEORI — NILAI VS. KELANGKAAN</h4>
+      <p>Klaim kelangkaan CAST perlu diuji dengan teori ekonomi dasar, bukan cuma diterima mentah dari retorika whitepaper-nya sendiri. Dalam ekonomi klasik, nilai suatu barang bukan fungsi dari kelangkaan semata — ini yang dikenal sebagai <em>paradoks nilai</em> (diamond-water paradox) yang dibahas Adam Smith: air sangat berguna tapi murah karena melimpah, sedangkan berlian nyaris tak berguna tapi mahal karena langka <strong>dan</strong> ada permintaan nyata terhadapnya. Teori utilitas marjinal menjelaskan lebih presisi lagi: harga ditentukan oleh kombinasi kelangkaan <em>dan</em> permintaan, bukan oleh jumlah total unit yang tersedia saja.</p>
+      <p>Bitcoin sering dijadikan rujukan "kelangkaan digital" karena memenuhi kedua sisi persamaan itu sekaligus — supply matematis terbatas (21 juta koin) <strong>dan</strong> permintaan yang tumbuh nyata lewat efek jaringan, adopsi institusional, dan penggunaan lintas negara sebagai penyimpan nilai. CAST hanya mengklaim separuh persamaan: supply terbatas (2.030 token) — tanpa bukti independen sisi permintaannya di luar hype campaign dan spekulasi jangka pendek. Tanpa permintaan yang berdiri sendiri, angka "2.030" hanyalah batas atas produksi, bukan jaminan nilai.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <tr><th>Kategori</th><th>Alokasi</th><th>%</th></tr>
+        <tr><td>Public Community Collection</td><td class="num">1.500</td><td class="num">73,9%</td></tr>
+        <tr><td>Reserve &amp; Treasury</td><td class="num">230</td><td class="num">11,4%</td></tr>
+        <tr><td>Collector Rewards</td><td class="num">110</td><td class="num">5,4%</td></tr>
+        <tr><td>Internal Allocation (Team)</td><td class="num">100</td><td class="num">4,9%</td></tr>
+        <tr><td>Partnership &amp; Ecosystem</td><td class="num">90</td><td class="num">4,4%</td></tr>
+      </table>
+    </div>
+
+    <div class="finding">
+      <span class="tag flag">RED FLAG</span>
+      <div class="finding-body"><p><strong>Volatilitas ekstrem.</strong> Harga tercatat sempat mencapai puncak sekitar Rp 236,95 juta per token (9 Januari 2026), lalu anjlok ke sekitar Rp 1,8 juta (7 Maret 2026) — penurunan lebih dari 99% dalam kurang dari dua bulan.</p></div>
+    </div>
+    <div class="finding">
+      <span class="tag caution">CAUTION</span>
+      <div class="finding-body"><p><strong>Data circulating supply tidak konsisten antar sumber.</strong> Salah satu data tracker (CoinCodex) mencatat circulating supply CAST sebagai 0,00 — indikasi price discovery yang tidak sehat, bukan cuma bug data.</p></div>
+    </div>
+    <div class="finding">
+      <span class="tag caution">CAUTION</span>
+      <div class="finding-body"><p><strong>"Deflasi" yang diklaim bersifat psikologis, bukan mekanisme kode.</strong> Whitepaper mengakui sendiri bahwa penyusutan supply beredar sepenuhnya bergantung pada perilaku holder untuk tidak menjual — tidak ada burn atau lock terprogram yang menjaminnya.</p></div>
+    </div>
+
+    <p class="pull">Kelangkaan tanpa demand independen bukan sumber nilai otomatis — ia baru jadi angka statis sampai ada alasan konkret orang mau membeli di luar keyakinan filosofis.</p>
+  </section>
+
+  <div class="questions">
+    <h2>Pertanyaan yang Belum Terjawab</h2>
+    <ol>
+      <li>Syarat resmi listing Indodax mensyaratkan laporan audit independen dan data tim sebagai dokumen wajib due diligence — apakah CAST menyerahkan ini secara privat ke Indodax tanpa mempublikasikannya ke investor ritel?</li>
+      <li>Apakah alokasi Team, Reserve & Treasury, dan Partnership (20,7% total supply) terkunci dengan vesting/lock contract, dan di mana publik bisa memverifikasinya?</li>
+      <li>Mengapa CAST tidak memiliki liquidity pool di DEX manapun, sementara sebagian besar token BEP-20 legit biasanya tetap menjaga jalur DEX sebagai cross-check harga independen?</li>
+      <li>Siapa individu di balik tim CAST, dan apakah ada rencana doxxing atau KYC publik ke depannya?</li>
+    </ol>
+  </div>
+
+  <div class="final-verdict">
+    <h2>Verdict</h2>
+    <p>CAST bukan sekadar "token filosofis tanpa utility" — riset ini menunjukkan gap yang lebih dalam antara narasi permanence yang dijual dan struktur pasar yang sebenarnya sangat rapuh: tidak ada price discovery independen, insider allocation signifikan tanpa vesting yang terverifikasi, jejak komunitas jauh di bawah proyek pembanding di listing batch yang sama, dan transparansi publik yang lebih rendah dari apa yang disyaratkan proses listing exchange-nya sendiri. Ini bukan disqualifikasi otomatis — tapi cukup untuk menempatkan CAST di kategori risiko tinggi yang butuh kehati-hatian ekstra, terutama untuk eksposur modal yang lebih dari sekadar mengikuti rasa penasaran.</p>
+  </div>
+
+  <footer>
+    <p>Laporan ini disusun berdasarkan riset independen atas whitepaper CAST v1.2 dan data publik yang tersedia per September 2026. Ini bukan nasihat keuangan. Harga dan data on-chain bergerak cepat — verifikasi ulang angka terbaru sebelum mengambil keputusan apa pun. DYOR.</p>
+    <div class="sources">
+      <span>Sumber: Whitepaper CAST2030 v1.2 · BscScan · DexScreener · Indodax Academy · CoinCodex · CoinGecko/CoinMarketCap (Nexa, Unibase) · Panduan resmi listing Indodax</span>
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>
